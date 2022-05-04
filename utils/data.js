@@ -43,21 +43,6 @@ const thoughtText = [
   "Vestibulum rhoncus est pellentesque elit.",
 ];
 
-const emails = [
-  "silvios@creamstrn.shop",
-  "nathaliecoudeville@kiziwi.xyz",
-  "jchillin504@cuedigy.com",
-  "keithwillet4@icsasco.it",
-  "la6q8517uu@card4kurd.xyz",
-  "symanyshynlesja@pseyusv.com",
-  "verohya@mexcool.com",
-  "soniyaal@816qs.com",
-  "avnishmadan@boranora.com",
-  "gnujjjenqoc@boranora.com",
-  "dineshkeyal@mymailcr.com",
-  "jdcarr@outlook.sbs",
-];
-
 const reactions = ["like", "love", "sad", "angry"];
 
 const users = [];
@@ -68,22 +53,20 @@ const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 // Gets a random full name
 const getRandomUser = () => getRandomArrItem(userNames);
 
-const getRandomEmail = () => getRandomArrItem(emails);
-
 // Function to generate random thoughts that we can add to the database. Includes reactions.
 const getRandomThoughts = (int) => {
   let results = [];
   for (let i = 0; i < int; i++) {
     results.push({
       thoughtText: getRandomArrItem(thoughtText),
-      username: getRandomUser(),
+      // username: getRandomUser(),
       reactions: [...getReactions(3)],
     });
   }
   return results;
 };
 
-// Create the tags that will be added to each application
+// Create the reactions that will be added to each thought
 const getReactions = (int) => {
   const results = [];
   for (let i = 0; i < int; i++) {
@@ -93,4 +76,12 @@ const getReactions = (int) => {
     });
   }
   return results;
+};
+
+const getRandomFriends = () => getRandomArrItem(userNames);
+
+module.exports = {
+  getRandomFriends,
+  getRandomThoughts,
+  getRandomUser,
 };
