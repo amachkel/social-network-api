@@ -18,46 +18,37 @@ connection.once("open", async () => {
   await Thought.deleteMany({});
 
   // Create empty array to hold the users
-  const users = [];
-  let thoughts;
-  let friends;
+  const userArr = [];
+  const thoughtArr = [];
   // Loop 10 times -- add users to the users array
   for (let i = 0; i < 10; i++) {
-    // Get some random assignment objects using a helper function that we imported from ./data
-    thoughts = getRandomThoughts(3);
     const username = `${getRandomUser()}${Math.floor(
       Math.random() * (99 - 18 + 1) + 18
     )}`;
     const email = `${username}@gmail.com`;
-    friends = () => {
-      let friend = `${username} ${Math.floor(
-        Math.random() * (99 - 18 + 1) + 18
-      )}`;
-      if (friend !== username) {
-        return friend;
-      } else {
-        return "";
-      }
-    };
-
-    users.push({
+    const friends = getRandomFriends(10);
+    const thoughts = getRandomThoughts(3);
+    userArr.push({
       username,
       email,
+      friends,
+      thoughts,
     });
   }
-
+  for (let i = 0; i < 10; i++) {
+    const thoughts = getRandomThoughts();
+    thoughtArr.push({
+      thoughts,
+    });
+  }
   // Add users to the collection and await the results
-  await User.collection.insertMany(users);
+  await User.collection.insertMany(userArr);
 
   // Add thoughts to the collection and await the results
-  await Thought.collection.insertOne({
-    users: [...users],
-    thoughts,
-    friends,
-  });
+  await Thought.collection.insertMany(thoughtArr);
 
   // Log out the seed data to indicate what should appear in the database
-  console.table(users);
+  console.table(userArr);
   console.info("Seeding complete! 🌱");
   process.exit(0);
 });

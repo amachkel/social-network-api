@@ -1,6 +1,4 @@
 const userNames = [
-  "Aaran",
-  "Aaren",
   "Aarez",
   "Aarman",
   "Aaron",
@@ -23,6 +21,25 @@ const userNames = [
   "Abdulkadir",
   "Abdulkarem",
   "Smith",
+  "Zubair",
+  "Zubayr",
+  "Zuriel",
+  "Xander",
+  "Jared",
+  "Courtney",
+  "Gillian",
+  "Clark",
+  "Jared",
+  "Grace",
+  "Kelsey",
+  "Tamar",
+  "Alex",
+  "Mark",
+  "Tamar",
+  "Farish",
+  "Sarah",
+  "Nathaniel",
+  "Parker",
 ];
 
 const thoughtText = [
@@ -43,26 +60,26 @@ const thoughtText = [
   "Vestibulum rhoncus est pellentesque elit.",
 ];
 
-const reactions = ["like", "love", "sad", "angry"];
-
-const users = [];
+const reactions = ["😀", "🤣", "🥑", "😱", "💓", "😭", "😡"];
 
 // Get a random item given an array
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-// Gets a random full name
-const getRandomUser = () => getRandomArrItem(userNames);
+// Gets a random user
+const getRandomUser = () =>
+  `${getRandomArrItem(userNames)}${Math.floor(
+    Math.random() * (99 - 18 + 1) + 18
+  )}`;
 
 // Function to generate random thoughts that we can add to the database. Includes reactions.
-const getRandomThoughts = (int) => {
-  let results = [];
-  for (let i = 0; i < int; i++) {
-    results.push({
-      thoughtText: getRandomArrItem(thoughtText),
-      // username: getRandomUser(),
-      reactions: [...getReactions(3)],
-    });
-  }
+const getRandomThoughts = () => {
+  const results = {
+    thoughtText: getRandomArrItem(thoughtText),
+    createdAt: Date.now,
+    username: getRandomUser(),
+    reactions: [...getReactions(3)],
+  };
+
   return results;
 };
 
@@ -78,7 +95,13 @@ const getReactions = (int) => {
   return results;
 };
 
-const getRandomFriends = () => getRandomArrItem(userNames);
+const getRandomFriends = (int) => {
+  let results = [];
+  for (let i = 0; i < int; i++) {
+    results.push(getRandomUser());
+  }
+  return results;
+};
 
 module.exports = {
   getRandomFriends,
