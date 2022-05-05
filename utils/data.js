@@ -90,6 +90,7 @@ const getReactions = (int) => {
     results.push({
       reactionBody: getRandomArrItem(reactions),
       username: getRandomUser(),
+      createdAt: Date.now,
     });
   }
   return results;
@@ -103,8 +104,8 @@ const getRandomFriends = (int) => {
   return results;
 };
 
-module.exports = {
-  getRandomFriends,
-  getRandomThoughts,
-  getRandomUser,
-};
+// module.exports = {
+//   getRandomFriends,
+//   getRandomThoughts,
+//   getRandomUser,
+// };

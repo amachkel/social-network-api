@@ -43,6 +43,7 @@ const userSchema = new Schema(
 
 // TypeError: Cannot read properties of undefined (reading 'length')
 // userSchema.virtual("friendCount").get(function () {
+// console.log(this);
 //   return this.friends.length;
 // });
 

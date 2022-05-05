@@ -1,4 +1,4 @@
-const { Thought } = require("../models");
+const { Thought, User, Reaction } = require("../models");
 
 module.exports = {
   // Get all thoughts
@@ -21,6 +21,13 @@ module.exports = {
   // Create a thought
   createThought(req, res) {
     Thought.create(req.body)
+      .then((thought) => {
+        return User.findOneAndUpdate(
+          { _id: req.body.userId },
+          { $addToSet: { thoughts: thought._id } },
+          { new: true }
+        );
+      })
       .then((thought) => res.json(thought))
       .catch((err) => {
         console.log(err);
@@ -54,7 +61,7 @@ module.exports = {
   },
   // Add a reaction to a thought
   addReaction(req, res) {
-    console.log("You are adding an reaction");
+    console.log("You are adding a reaction");
     console.log(req.body);
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -83,3 +90,8 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 };
+
+// when you create a thought it needs to be added to a user
+// so you need to do a findbyoneandupdate on the user and load
+// the thought there so that it actually gets added to the user
+//  model
