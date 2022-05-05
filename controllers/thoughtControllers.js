@@ -28,7 +28,13 @@ module.exports = {
           { new: true }
         );
       })
-      .then((thought) => res.json(thought))
+      .then((user) =>
+        !user
+          ? res.status(404).json({
+              message: "Thought created, but found no user with that ID",
+            })
+          : res.json("Created the thought 🎉")
+      )
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
@@ -40,9 +46,9 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID" })
-          : Student.deleteMany({ _id: { $in: thought.user } })
+          : Thought.deleteMany({ _id: { $in: thought.user } })
       )
-      .then(() => res.json({ message: "Thought and user deleted!" }))
+      .then(() => res.json({ message: "Thought deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
   // Update a thought
@@ -90,8 +96,3 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 };
-
-// when you create a thought it needs to be added to a user
-// so you need to do a findbyoneandupdate on the user and load
-// the thought there so that it actually gets added to the user
-//  model
