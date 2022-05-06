@@ -69,13 +69,15 @@ module.exports = {
 
   // Add a friend to a user
   addFriend(req, res) {
-    console.log("You are adding a friend");
+    // console.log("You are adding a friend");
     console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $addToSet: { friends: req.body } },
       { runValidators: true, new: true }
     )
+      .populate({ path: "friends", select: "-__v" })
+      .select("-__v")
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user found with that ID" })
