@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-
+const friendSchema = require("./Friend");
 // Schema to create a course model
 const userSchema = new Schema(
   {
@@ -24,12 +24,7 @@ const userSchema = new Schema(
         ref: "thought",
       },
     ],
-    friends: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "user",
-      },
-    ],
+    friends: [friendSchema],
   },
   // Mongoose supports two Schema options to transform Objects after querying MongoDb: toJSON and toObject.
   // Here we are indicating that we want virtuals to be included with our response, overriding the default behavior
@@ -41,11 +36,10 @@ const userSchema = new Schema(
   }
 );
 
-// TypeError: Cannot read properties of undefined (reading 'length')
-// userSchema.virtual("friendCount").get(function () {
-// console.log(this);
-//   return this.friends.length;
-// });
+userSchema.virtual("friendCount").get(function () {
+  console.log(this);
+  return this.friends.length;
+});
 
 const User = model("user", userSchema);
 

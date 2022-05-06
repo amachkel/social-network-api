@@ -60,8 +60,6 @@ const thoughtText = [
   "Vestibulum rhoncus est pellentesque elit.",
 ];
 
-const reactions = ["😀", "🤣", "🥑", "😱", "💓", "😭", "😡"];
-
 // Get a random item given an array
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
@@ -77,35 +75,13 @@ const getRandomThoughts = () => {
     thoughtText: getRandomArrItem(thoughtText),
     createdAt: Date.now,
     username: getRandomUser(),
-    reactions: [...getReactions(3)],
+    reactions: [],
   };
 
   return results;
 };
 
-// Create the reactions that will be added to each thought
-const getReactions = (int) => {
-  const results = [];
-  for (let i = 0; i < int; i++) {
-    results.push({
-      reactionBody: getRandomArrItem(reactions),
-      username: getRandomUser(),
-      createdAt: Date.now,
-    });
-  }
-  return results;
+module.exports = {
+  getRandomThoughts,
+  getRandomUser,
 };
-
-const getRandomFriends = (int) => {
-  let results = [];
-  for (let i = 0; i < int; i++) {
-    results.push(getRandomUser());
-  }
-  return results;
-};
-
-// module.exports = {
-//   getRandomFriends,
-//   getRandomThoughts,
-//   getRandomUser,
-// };
